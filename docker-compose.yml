@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  zookeeper:
+    image: jplock/zookeeper
+    ports:
+      - "2181"
+  config-server:
+    image: config-server
+    environment:
+      - ZOOKEEPER_HOSTNAME=zookeeper
+    ports:
+      - "8888"
+    depends_on:
+      - zookeeper
+  zuul-proxy:
+    image: zuul-proxy
+    environment:
+      - ZOOKEEPER_HOSTNAME=zookeeper
+    ports:
+      - "8081:8081"
+    depends_on:
+      - zookeeper
+      - config-server
+  service-one:
+    image: service-one
+    environment:
+     - ZOOKEEPER_HOSTNAME=zookeeper
+    ports:
+      - "8082"
+    depends_on:
+      - zookeeper
+      - config-server
