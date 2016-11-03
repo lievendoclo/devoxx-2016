@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @RestController
 @EnableDiscoveryClient
-//@RibbonClient("service-two")
 public class ServiceTwoEndpoint {
 
 	@LoadBalanced
