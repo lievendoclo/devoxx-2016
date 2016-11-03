@@ -1,33 +1,44 @@
 version: '2'
 
 services:
-  zookeeper:
-    image: jplock/zookeeper
-    ports:
-      - "2181"
+  eureka:
+      image: devoxx-talk-2016/eureka-server
+      environment:
+        - EUREKA_HOSTNAME=eureka-server
+      ports:
+        - "8761"
   config-server:
-    image: config-server
+    image: devoxx-talk-2016/config-server
     environment:
-      - ZOOKEEPER_HOSTNAME=zookeeper
+      - EUREKA_HOSTNAME=eureka
     ports:
       - "8888"
     depends_on:
-      - zookeeper
+      - eureka
   zuul-proxy:
-    image: zuul-proxy
+    image: devoxx-talk-2016/zuul-proxy
     environment:
-      - ZOOKEEPER_HOSTNAME=zookeeper
+      - EUREKA_HOSTNAME=eureka
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
-      - zookeeper
+      - eureka
       - config-server
   service-one:
-    image: service-one
+    image: devoxx-talk-2016/service-one
     environment:
-     - ZOOKEEPER_HOSTNAME=zookeeper
+     - EUREKA_HOSTNAME=eureka
     ports:
       - "8082"
     depends_on:
-      - zookeeper
+      - eureka
       - config-server
+  service-two:
+      image: devoxx-talk-2016/service-two
+      environment:
+       - EUREKA_HOSTNAME=eureka
+      ports:
+        - "8082"
+      depends_on:
+        - eureka
+        - config-server

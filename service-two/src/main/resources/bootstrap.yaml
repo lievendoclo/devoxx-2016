@@ -1,6 +1,6 @@
 spring:
   application:
-    name: zuulproxy
+    name: service-two
   cloud:
     config:
       discovery:
@@ -11,6 +11,5 @@ eureka:
     serviceUrl:
       defaultZone: http://${EUREKA_HOSTNAME:localhost}:8761/eureka/
 
-endpoints:
-  restart:
-    enabled: true
+server:
+  port: 8083

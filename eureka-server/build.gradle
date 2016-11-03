@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
         classpath "se.transmode.gradle:gradle-docker:1.2"
     }
 }
@@ -12,6 +13,8 @@ apply plugin: "spring-boot"
 apply plugin: "groovy"
 apply plugin: "application"
 apply plugin: "docker"
+apply plugin: "io.spring.dependency-management"
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -24,6 +27,13 @@ repositories {
 
 configurations {
     all*.exclude module: 'spring-boot-starter-tomcat'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:1.3.6.RELEASE'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR3'
+    }
 }
 
 dependencies {
@@ -39,6 +49,6 @@ docker {
 }
 
 distDocker {
-    applicationName = "devoxx-bof-eureka-server"
+    applicationName = "be.insaneprogramming.devoxx-bof-eureka-server"
     exposePort 8761
 }
