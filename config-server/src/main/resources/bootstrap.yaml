@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/lievendoclo/config-repo-test
+          uri: https://github.com/lievendoclo/devoxx-2016-config
 
 eureka:
   client:
