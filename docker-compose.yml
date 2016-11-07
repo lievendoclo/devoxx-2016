@@ -6,7 +6,7 @@ services:
       environment:
         - EUREKA_HOSTNAME=eureka-server
       ports:
-        - "8761"
+        - "8761:8761"
   config-server:
     image: devoxx-talk-2016/config-server
     environment:

@@ -5,12 +5,26 @@ spring:
     config:
       discovery:
         enabled: true
+      fail-fast: true
+      retry:
+        multiplier: 5
+        initial-interval: 1000
+        max-interval: 10000
+    loadbalancer:
+      retry:
+        enabled: true
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://${EUREKA_HOSTNAME:localhost}:8761/eureka/
+    registry-fetch-interval-seconds: 5
 
 endpoints:
   restart:
     enabled: true
+
+zuul:
+  retryable: true
+
+
